@@ -1,0 +1,67 @@
+{
+  "name": "@openma/deepseek-harness-sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK for DeepSeek Harness (dsh): run AI agent turns in a runtime subprocess over newline-delimited JSON-RPC stdio — the DeepSeekHarness high-level turns API and the lower-level HarnessClient, mirroring the official Python SDK",
+  "keywords": [
+    "deepseek",
+    "deepseek-harness",
+    "deepseek-sdk",
+    "dsh",
+    "agent",
+    "ai-agent",
+    "agent-harness",
+    "coding-agent",
+    "llm",
+    "sdk",
+    "typescript",
+    "json-rpc",
+    "jsonrpc",
+    "stdio",
+    "subprocess",
+    "automation"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
+  "author": "hrhrng <hrhrng@foxmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openma-ai/deepseek-harness-typescript-sdk.git"
+  },
+  "homepage": "https://github.com/openma-ai/deepseek-harness-typescript-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/openma-ai/deepseek-harness-typescript-sdk/issues"
+  },
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "README.zh.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run",
+    "prepublishOnly": "npm run build"
+  },
+  "devDependencies": {
+    "@types/node": "^24.3.0",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  }
+}

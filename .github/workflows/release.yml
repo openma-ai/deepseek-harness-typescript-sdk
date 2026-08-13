@@ -1,0 +1,48 @@
+# Publishes @openma/deepseek-harness-sdk to npm when a v* tag is pushed.
+#
+# One-time setup:
+#   1. Create the `openma` org on npmjs.com (free, public packages).
+#   2. Generate a granular access token (Read and write, scoped to @openma)
+#      and store it as the `NPM_TOKEN` repository secret.
+#   3. Release: `npm version patch && git push --follow-tags`.
+#
+# After the first release you can switch the package to npm Trusted
+# Publishing (package Settings -> Trusted publisher -> GitHub Actions with
+# this repo + workflow file), then delete NPM_TOKEN and the NODE_AUTH_TOKEN
+# line below — `id-token: write` already enables OIDC publishing.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: read
+  id-token: write # npm provenance / trusted publishing (OIDC)
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          registry-url: https://registry.npmjs.org
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - name: Ensure tag matches package.json version
+        run: |
+          PKG_VERSION="$(node -p "require('./package.json').version")"
+          TAG_VERSION="${GITHUB_REF_NAME#v}"
+          if [ "$PKG_VERSION" != "$TAG_VERSION" ]; then
+            echo "package.json version ($PKG_VERSION) does not match tag ($TAG_VERSION)" >&2
+            exit 1
+          fi
+      # prepublishOnly runs the build; publishConfig owns access + provenance.
+      - run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
