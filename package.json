@@ -1,6 +1,6 @@
 {
   "name": "@openma/deepseek-harness-sdk",
-  "version": "0.0.1",
+  "version": "0.0.2-beta.0",
   "description": "TypeScript SDK for DeepSeek Harness (dsh): run AI agent turns in a runtime subprocess over newline-delimited JSON-RPC stdio — the DeepSeekHarness high-level turns API and the lower-level HarnessClient, mirroring the official Python SDK",
   "keywords": [
     "deepseek",
