@@ -50,4 +50,14 @@ jobs:
           fi
       # prepublishOnly runs the build; publishConfig owns access + provenance.
       # Auth comes from the OIDC exchange — no NODE_AUTH_TOKEN.
-      - run: npm publish
+      # Prerelease versions publish under their identifier's dist-tag
+      # (v0.0.2-beta.0 -> beta) so `latest` only ever points at stable releases.
+      - name: Publish
+        run: |
+          VERSION="${GITHUB_REF_NAME#v}"
+          case "$VERSION" in
+            *-*) PRERELEASE_ID="${VERSION#*-}"; DIST_TAG="${PRERELEASE_ID%%.*}" ;;
+            *) DIST_TAG="latest" ;;
+          esac
+          echo "publishing $VERSION with dist-tag $DIST_TAG"
+          npm publish --tag "$DIST_TAG"
