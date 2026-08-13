@@ -135,15 +135,6 @@ npm test        # 针对脚本化 fake runtime 运行；无需网络或模型
 npm run build
 ```
 
-## 发版
-
-推送 `v*` tag 会触发 [release workflow](.github/workflows/release.yml)：校验 tag 与 `package.json` 版本一致、跑测试套件，然后带 provenance 发布到 npm：
-
-```sh
-npm version patch   # 或 minor / major —— 自动 commit 并打 vX.Y.Z tag
-git push --follow-tags
-```
-
 ## 许可证
 
 [MIT](LICENSE)

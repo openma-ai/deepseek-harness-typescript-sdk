@@ -135,15 +135,6 @@ npm test        # runs against a scripted fake runtime; no network or model need
 npm run build
 ```
 
-## Release
-
-Pushing a `v*` tag triggers the [release workflow](.github/workflows/release.yml), which verifies the tag against `package.json`, runs the test suite, and publishes to npm with provenance:
-
-```sh
-npm version patch   # or minor / major — commits and tags vX.Y.Z
-git push --follow-tags
-```
-
 ## License
 
 [MIT](LICENSE)
